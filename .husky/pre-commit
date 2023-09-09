@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# npm test
+
+pnpm exec pretty-quick --staged && pnpm exec lint-staged || (
+    echo '❌ PRE-COMMIT HOOK: Failed...'
+    false
+)
+
+echo '✅ PRE-COMMIT HOOK: Passed!'
+
