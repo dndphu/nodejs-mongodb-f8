@@ -22,7 +22,8 @@
   "homepage": "https://github.com/dndphu/demo_nodejs#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.2.1"
+    "express-handlebars": "^5.2.1",
+    "mongoose": "^7.5.0"
   },
   "devDependencies": {
     "husky": "^8.0.3",
