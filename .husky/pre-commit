@@ -3,10 +3,13 @@
 
 # npm test
 
-pnpm exec lint-staged || (
-    echo '❌ PRE-COMMIT HOOK: Failed...'
-    false
-)
-yarn beautiful
-echo '✅ PRE-COMMIT HOOK: Passed!'
+# pnpm exec lint-staged || (
+#     echo '❌ PRE-COMMIT HOOK: Failed...'
+#     echo '❌ Run format code with cmd: yarn beautiful'
+#     false
+# )
+# echo '✅ PRE-COMMIT HOOK: Passed!'
+
+yarn lint-staged
+echo 'Run format code'
 
