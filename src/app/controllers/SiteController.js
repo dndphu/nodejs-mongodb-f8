@@ -1,22 +1,24 @@
 const Course = require("../models/Course");
-
+const {multipleMongooseToObject} = require("../../utils/mongoose")
 async function getCourse() {
   const course = await Course.find({});
   return course;
 }
-class NewsController {
+
+
+class SiteController {
   //[GET] /
-  index(req, res) {
-    // await Course.find({}, function (err, courses) {
-    //   if (!err) res.json(courses);
-    //   res.status(400).json({ error: err });
-    // });
+  index(req, res,next) {
     getCourse()
       .then((course) => {
-        res.json(course);
+        res.render("home", {
+          title: "HOME PAGE",
+          course: multipleMongooseToObject(course),
+        });
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
+        // res.status(400).json({ error: err });
+        next(err);
       });
   }
 
@@ -26,4 +28,4 @@ class NewsController {
   }
 }
 
-module.exports = new NewsController();
+module.exports = new SiteController();
