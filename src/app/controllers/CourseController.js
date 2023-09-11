@@ -26,20 +26,25 @@ class CourseController {
       .catch((err) => next);
   }
   //[POST] /courses/store
-  store(req, res, next) {
+  async store(req, res, next) {
     // res.json(req.body)
     const formData = req.body;
     // !formData.slug && delete formData.slug
-    createCourse(formData)
+    await createCourse(formData)
       .then(() => res.redirect("/"))
       .catch((err) => res.send({ error: err }));
   }
   //[PUT] /course/:id
   async update(req, res, next) {
     // res.json(req.body)
-    const formData = req.body;
     await Course.updateOne({ _id: req.params.id }, req.body)
       .then(() => res.redirect("/me/stored/courses"))
+      .catch((err) => next);
+  }
+  //[DELETE] /course/:id
+  async delete(req, res, next) {
+    await Course.deleteOne({ _id: req.params.id })
+      .then(() => res.redirect("back"))
       .catch((err) => next);
   }
 }
