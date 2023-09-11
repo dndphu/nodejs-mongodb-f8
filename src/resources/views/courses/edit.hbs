@@ -1,7 +1,7 @@
 <div class="">
-  <h1>Create Course</h1>
+  <h1>Edit Course</h1>
 
-  <form method="POST" action="/courses/store">
+  <form method="POST" action="/courses/{{course._id}}?_method=PUT">
     <div class="form-group">
       <label for="name">Name </label>
       <input
@@ -9,19 +9,21 @@
         class="form-control"
         id="name"
         name="name"
+        value="{{course.name}}"
         placeholder="Enter name"
       />
 
     </div>
     <div class="form-group">
       <label for="description">Description</label>
-      <input
-        type="text"
-        name="description"
+      <textarea
         class="form-control"
         id="description"
-        placeholder="description"
-      />
+        name="description"
+        rows="2"
+      >{{course.description}}
+      </textarea>
+
     </div>
     <div class="form-group">
       <label for="slug">Slug</label>
@@ -30,6 +32,7 @@
         name="slug"
         class="form-control"
         id="slug"
+        value="{{course.slug}}"
         placeholder="slug"
       />
     </div>
@@ -40,10 +43,12 @@
         name="image"
         class="form-control"
         id="image"
+        value="{{course.image}}"
         placeholder="image"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/me/stored/courses" class="btn">Back</a>
+    <button type="submit" class="btn btn-primary">Save</button>
   </form>
 
 </div>
