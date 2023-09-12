@@ -14,6 +14,17 @@ class MeController {
         next(err);
       });
   }
+  showDeleted(req, res) {
+    Course.findDeleted({})
+      .then((course) => {
+        res.render("me/trash-courses", {
+          course: multipleMongooseToObject(course),
+        });
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
 }
 
 module.exports = new MeController();

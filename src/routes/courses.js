@@ -11,5 +11,8 @@ router.get("/courses/:id/edit", courseController.edit);
 router.post("/courses/store", courseController.store);
 router.put("/courses/:id", courseController.update);
 
+router.patch("/courses/:id/restore", courseController.restore);
+
 router.delete("/courses/:id", courseController.delete);
+router.delete("/courses/:id/force", courseController.forceDelete);
 module.exports = router;
