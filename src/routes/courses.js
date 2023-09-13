@@ -8,6 +8,7 @@ router.get("/courses/:slug", courseController.show);
 
 router.get("/courses/:id/edit", courseController.edit);
 
+router.post("/courses/form-actions", courseController.handleForm);
 router.post("/courses/store", courseController.store);
 router.put("/courses/:id", courseController.update);
 

@@ -57,6 +57,11 @@ class CourseController {
       .then(() => res.redirect("back"))
       .catch((err) => next);
   }
+
+  //[POST] /courses/form-actions
+  handleForm(req, res, next) {
+    res.json(req.body);
+  }
 }
 
 module.exports = new CourseController();
