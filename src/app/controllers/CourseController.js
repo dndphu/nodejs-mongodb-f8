@@ -59,8 +59,19 @@ class CourseController {
   }
 
   //[POST] /courses/form-actions
-  handleForm(req, res, next) {
-    res.json(req.body);
+  async handleForm(req, res, next) {
+    const { action, courseIds } = req.body;
+    switch (action) {
+      case "delete":
+        await Course.delete({ _id: { $in: courseIds } })
+          .then(() => res.redirect("back"))
+          .catch(next);
+
+        break;
+      default:
+        res.json({ message: "Action is invalid!" });
+        break;
+    }
   }
 }
 
