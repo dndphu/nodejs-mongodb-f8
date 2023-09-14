@@ -13,3 +13,4 @@
 yarn lint-staged
 echo 'Run format code ✅ ✅ ✅'
 
+npx --no-install commitlint --edit "$1"
