@@ -18,7 +18,7 @@
       <option value="delete">Delete</option>
     </select>
 
-    <button class="btn btn-primary btn-action-all disabled"> Click </button>
+    <button disabled="disabled" class="btn btn-primary btn-action-all"> Click </button>
 
   </div>
 
@@ -153,22 +153,12 @@
       renderCheckALlSubmit()
     })
 
-
-    btnActionAll.on('submit', function (e) {
-      var isSubmittable = !$(this).hasClass('disabled')
-      if (!isSubmittable){
-        e.preventDefault()
-      }
-    })
-
-
-
     function renderCheckALlSubmit(){
       var checkedCount = $('input[name="courseIds[]"]:checked').length
       if (checkedCount){
-        btnActionAll.removeClass('disabled')
+        btnActionAll.attr('disabled',false)
       } else {
-        btnActionAll.addClass('disabled')
+        btnActionAll.attr('disabled',true)
       }
     }
 
