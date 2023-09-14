@@ -11,5 +11,4 @@
 # echo '✅ PRE-COMMIT HOOK: Passed!'
 
 yarn lint-staged
-echo 'Run format code'
-
+echo 'Run format code ✅ ✅ ✅'
