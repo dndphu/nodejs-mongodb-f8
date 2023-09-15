@@ -1,16 +1,16 @@
 <form name="container-form" method="POST" action="/courses/form-actions" class="mt-4">
   <div>
-  <h3>Courses </h3>
-  {{!-- {{#if deleteCount}} --}}
-  <a class="" href="/me/trash/courses">Trash ({{deleteCount}})</a>
-  {{!-- {{/if}} --}}
+    <h3>Courses </h3>
+    {{!-- {{#if deleteCount}} --}}
+    <a class="" href="/me/trash/courses">Trash ({{deleteCount}})</a>
+    {{!-- {{/if}} --}}
   </div>
   <div class="my-4 d-flex align-items-center">
     <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="check-all">
-    <label class="form-check-label" for="check-all">
-      Select All
-    </label>
+      <input class="form-check-input" type="checkbox" value="" id="check-all" />
+      <label class="form-check-label" for="check-all">
+        Select All
+      </label>
     </div>
 
     <select style="width:200px" class="custom-select custom-select-sm mx-4" name="action" id="select-action" required>
@@ -18,61 +18,58 @@
       <option value="delete">Delete</option>
     </select>
 
-    <button disabled="disabled" class="btn btn-primary btn-action-all"> Click </button>
+    <button disabled="disabled" class="btn btn-primary btn-action-all">
+      Click
+    </button>
 
   </div>
-
-
   <table class="table">
     <thead>
       <tr>
         <th scope="col"></th>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
+        <th scope="col">Name
+          {{{sortable 'name' _sort}}}
+        </th>
         <th scope="col">Description</th>
         <th scope="col">Image</th>
-        <th scope="col" colspan="" >Create at</th>
+        <th scope="col" colspan="">Create at
+          {{{sortable 'createdAt' _sort}}}
+        </th>
         <th scope="col" style="width: 180px">Action</th>
       </tr>
     </thead>
     <tbody>
       {{#each course}}
 
-        <tr>
-          <th>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="{{this._id}}" id="defaultCheck1" name="courseIds[]">
-            </div>
-          </th>
-          <th scope="row">{{sum @index 1}}</th>
-          <td>{{this.name}}</td>
-          <td>{{this.description}}</td>
-          <td>
+      <tr>
+        <th>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="{{this._id}}" id="defaultCheck1"
+              name="courseIds[]" />
+          </div>
+        </th>
+        <th scope="row">{{sum @index 1}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>
 
-          </td>
-          <td>{{this.createdAt}}</td>
-          <td>
-            <div class="row">
-              <a
-                href="/courses/{{this._id}}/edit"
-                class="btn btn-primary mr-2"
-              >Update</a>
-              <a
-                class="btn btn-danger"
-                data-toggle="modal"
-                data-target="#deleteModal"
-                data-id="{{this._id}}"
-              >Delete</a>
-            </div>
+        </td>
+        <td>{{this.createdAt}}</td>
+        <td>
+          <div class="row">
+            <a href="/courses/{{this._id}}/edit" class="btn btn-primary mr-2">Update</a>
+            <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="{{this._id}}">Delete</a>
+          </div>
 
-          </td>
-        </tr>
+        </td>
+      </tr>
       {{else}}
-        <tr>
-          <td colspan="5" class="text-center">
-            No data
-          </td>
-        </tr>
+      <tr>
+        <td colspan="5" class="text-center">
+          No data
+        </td>
+      </tr>
       {{/each}}
 
     </tbody>
@@ -80,23 +77,12 @@
 </form>
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="deleteModal"
-  tabindex="-1"
-  aria-labelledby="deleteModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteModalLabel">Delete</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -105,63 +91,58 @@
       </div>
       <div class="modal-footer">
         <button id="btn-delete-course" type="button" class="btn btn-danger">Delete</button>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal"
-        >Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
 
-{{!-- DELETE form --}}
-<form method="POST" name="delete-course-form" >
-
+{{! DELETE form }}
+<form method="POST" name="delete-course-form"> </form>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function(event){
+  document.addEventListener('DOMContentLoaded', function (event) {
     var courseId;
-    var containerForm = document.forms['container-form']
+    var containerForm = document.forms['container-form'];
     var deleteForm = document.forms['delete-course-form'];
-    var checkAll = $('#check-all')
-    var courseItemCheckbox = $('input[name="courseIds[]"]')
-    var btnActionAll = $('.btn-action-all')
+    var checkAll = $('#check-all');
+    var courseItemCheckbox = $('input[name="courseIds[]"]');
+    var btnActionAll = $('.btn-action-all');
 
     $('#deleteModal').on('show.bs.modal', function (event) {
-    const button = $(event.relatedTarget);
-    courseId = button.data('id');
-    var btnDeleteCourse = document.getElementById('btn-delete-course')
-    btnDeleteCourse.onclick= function(){
-      deleteForm.action = '/courses/'+courseId+'?_method=DELETE'
-      deleteForm.submit()
-    }
+      const button = $(event.relatedTarget);
+      courseId = button.data('id');
+      var btnDeleteCourse = document.getElementById('btn-delete-course')
+      btnDeleteCourse.onclick = function () {
+        deleteForm.action = '/courses/' + courseId + '?_method=DELETE'
+        deleteForm.submit()
+      }
     })
 
     //check all
-    checkAll.change(function() {
+    checkAll.change(function () {
       var isCheckedAll = $(this).prop('checked')
-      courseItemCheckbox.prop('checked',isCheckedAll)
+      courseItemCheckbox.prop('checked', isCheckedAll)
       renderCheckALlSubmit()
     })
 
 
     //check-box item
-    courseItemCheckbox.change(function(){
-      var isCheckedAll = courseItemCheckbox.length ===  $('input[name="courseIds[]"]:checked').length
+    courseItemCheckbox.change(function () {
+      var isCheckedAll = courseItemCheckbox.length === $('input[name="courseIds[]"]:checked').length
       checkAll.prop('checked', isCheckedAll)
       renderCheckALlSubmit()
     })
 
-    function renderCheckALlSubmit(){
+    function renderCheckALlSubmit() {
       var checkedCount = $('input[name="courseIds[]"]:checked').length
-      if (checkedCount){
-        btnActionAll.attr('disabled',false)
+      if (checkedCount) {
+        btnActionAll.attr('disabled', false)
       } else {
-        btnActionAll.attr('disabled',true)
+        btnActionAll.attr('disabled', true)
       }
     }
 
-})
+  })
 
 </script>
