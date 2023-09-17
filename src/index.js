@@ -1,11 +1,13 @@
 const path = require("path");
 const express = require("express");
+const dotenv = require("dotenv").config();
+
 const morgan = require("morgan");
 const handlebars = require("express-handlebars");
 var methodOverride = require("method-override");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 //setup static folder
 app.use(express.static(path.join(__dirname, "public")));
@@ -27,29 +29,7 @@ app.engine(
   "hbs",
   handlebars({
     extname: ".hbs",
-    helpers: {
-      sum(a, b) {
-        return a + b;
-      },
-      sortable(name, sort) {
-        const sortType = name === sort.column ? sort.type : "default";
-        const icons = {
-          default: "bi bi-chevron-expand",
-          asc: "bi bi-chevron-down",
-          desc: "bi bi-chevron-up",
-        };
-        const icon = icons[sortType];
-        const types = {
-          default: "desc",
-          asc: "desc",
-          desc: "asc",
-        };
-        const type = types[sortType];
-        return `<a href="?_sort&column=${name}&type=${type}">
-            <i class="${icon}"></i>
-          </a>`;
-      },
-    },
+    helpers: require("./helpers/handlebars"),
   }),
 );
 app.set("view engine", "hbs");
@@ -60,8 +40,6 @@ app.use(SortMiddleware);
 
 const route = require("./routes");
 route(app);
-
-app.locals.title = "Phu ne";
 
 //connect db
 const db = require("./config/db");

@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/dndphu/demo_nodejs#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.1",
     "method-override": "^3.0.0",

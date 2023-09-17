@@ -3,7 +3,8 @@ mongoose.set("strictQuery", false);
 
 async function connect() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/nodejs_dev", {
+    console.log(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       // useCreateIndex: true,

@@ -8,13 +8,7 @@ class MeController {
   //[GET] /me/stored/courses
   show(req, res, next) {
     let courseQuery = Course.find({});
-    if (req.query.hasOwnProperty("_sort")) {
-      courseQuery.sort({
-        [req.query.column]: req.query.type,
-      });
-    }
-
-    Promise.all([courseQuery, Course.countDocumentsDeleted()])
+    Promise.all([courseQuery.sortable(req), Course.countDocumentsDeleted()])
       .then(([course, deleteCount]) => {
         res.render("me/stored-courses", {
           course: multipleMongooseToObject(course),
