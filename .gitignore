@@ -3,3 +3,5 @@
 
 src/public/css
 .env
+.lock
+.log
